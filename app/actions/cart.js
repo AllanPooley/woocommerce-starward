@@ -44,7 +44,8 @@ export const fetchCart = () => async (dispatch) => {
       withCredentials: true,
       headers: config
     });
-    dispatch(fetchCartSuccess(payload));
+    const cartItems = Object.keys(payload.data).map(key => payload.data[key]);
+    dispatch(fetchCartSuccess(cartItems));
   } catch (error) {
     dispatch(fetchCartFailure(error));
   }

@@ -44,8 +44,10 @@ class App extends Component {
     addToCart(productId, quantity);
   }
   render() {
-    const { children, starward, location} = this.props;
+    const { children, starward, location, cart } = this.props;
     const { settings, headerMenu } = starward;
+    const { items: cartItems } = cart;
+    console.log('cartItems:', cartItems);
     return (
       <div className={location.pathname === '/' ? 'home' : location.pathname.replace(/\//g, '')}>
         <Header
@@ -53,6 +55,16 @@ class App extends Component {
           navigation={headerMenu && headerMenu.length > 0 ? headerMenu : []}
           currentPath={location.pathname}
         />
+        <div className="cart">
+          <h2>Your Cart:</h2>
+          <ul className="cart-items">
+            {cartItems.map((item) => (
+              <li key={item.key}>
+                {item.product_name}
+              </li>
+            ))}
+          </ul>
+        </div>
         <div className="test-buttons">
           <Link className="test-button" to="#" onClick={(event) => this.addToCartHandler(event, 44, 1)}>Buy me a beanie</Link>
           <Link className="test-button" to="#" onClick={(event) => this.addToCartHandler(event, 50, 1)}>Buy me some sunglasses</Link>
